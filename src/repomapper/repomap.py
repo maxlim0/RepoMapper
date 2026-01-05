@@ -562,10 +562,25 @@ class RepoMap:
         force_refresh: bool = False
     ) -> Tuple[Optional[str], FileReport]:
         """Generate the repository map with file report."""
+        def find_src_files(directory: Path) -> List[str]:
+            if not directory.is_dir():
+                return [str(directory)] if directory.is_file() else []
+
+            src_files: List[str] = []
+            for root, dirs, files in os.walk(directory):
+                dirs[:] = [
+                    d for d in dirs
+                    if not d.startswith(".") and d not in {"node_modules", "__pycache__", "venv", "env"}
+                ]
+                for file in files:
+                    if not file.startswith("."):
+                        src_files.append(str(Path(root) / file))
+            return src_files
+
         if chat_files is None:
             chat_files = []
-        if other_files is None:
-            other_files = []
+        if not other_files:
+            other_files = find_src_files(self.root)
             
         # Create empty report for error cases
         empty_report = FileReport({}, 0, 0, 0)

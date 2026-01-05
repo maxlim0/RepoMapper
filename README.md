@@ -107,6 +107,8 @@ pip install -r requirements.txt
 from repomapper import RepoMap
 ```
 
+If you omit `other_files`, the mapper will scan the `root` directory by default.
+
 ### Basic Usage
 
 ```bash

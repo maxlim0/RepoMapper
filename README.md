@@ -41,9 +41,9 @@ I then used a combination of Aider w/Claude 3.7, Cline w/Gemini 2.5 Pro Preview 
 ## Example Output
 
 ```
-> python repomap.py . --chat-files repomap_class.py
-Chat files: ['/mnt/programming/RepoMapper/repomap_class.py']
-repomap_class.py:
+> repomap . --chat-files src/repomapper/repomap.py
+Chat files: ['/mnt/programming/RepoMapper/src/repomapper/repomap.py']
+src/repomapper/repomap.py:
 (Rank value: 10.8111)
 
   36: CACHE_VERSION = 1
@@ -58,14 +58,14 @@ repomap_class.py:
  483:         def try_tags(num_tags: int) -> Tuple[Optional[str], int]:
  512:     def get_repo_map(
 
-utils.py:
+src/repomapper/utils.py:
 (Rank value: 0.2297)
 
   18: Tag = namedtuple("Tag", "rel_fname fname line name kind".split())
   21: def count_tokens(text: str, model_name: str = "gpt-4") -> int:
   35: def read_text(filename: str, encoding: str = "utf-8", silent: bool = False) -> Optional[str]:
 
-importance.py:
+src/repomapper/importance.py:
 (Rank value: 0.1149)
 
    8: IMPORTANT_FILENAMES = {
@@ -101,38 +101,44 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Python API
+
+```python
+from repomapper import RepoMap
+```
+
 ### Basic Usage
 
 ```bash
 # Map current directory
-python repomap.py .
+repomap .
 
 # Map specific directory with custom token limit
-python repomap.py src/ --map-tokens 2048
+repomap src/ --map-tokens 2048
 
 # Map specific files
-python repomap.py file1.py file2.py
+repomap file1.py file2.py
 
 # Specify chat files (higher priority) vs other files
-python repomap.py --chat-files main.py --other-files src/
+repomap --chat-files main.py --other-files src/
 
 # Specify mentioned files and identifiers
-python repomap.py --mentioned-files config.py --mentioned-idents "main_function"
+repomap --mentioned-files config.py --mentioned-idents "main_function"
 
 # Enable verbose output
-python repomap.py . --verbose
+repomap . --verbose
 
 # Force refresh of caches
-python repomap.py . --force-refresh
+repomap . --force-refresh
 
 # Specify model for token counting
-python repomap.py . --model gpt-3.5-turbo
+repomap . --model gpt-3.5-turbo
 
 # Set maximum context window
-python repomap.py . --max-context-window 8192
+repomap . --max-context-window 8192
 
 # Exclude files with Page Rank 0
-python repomap.py . --exclude-unranked
+repomap . --exclude-unranked
 ```
 
 The tool prioritizes files in the following order:
@@ -145,22 +151,22 @@ The tool prioritizes files in the following order:
 
 ```bash
 # Enable verbose output
-python repomap.py . --verbose
+repomap . --verbose
 
 # Force refresh of caches
-python repomap.py . --force-refresh
+repomap . --force-refresh
 
 # Specify model for token counting
-python repomap.py . --model gpt-3.5-turbo
+repomap . --model gpt-3.5-turbo
 
 # Set maximum context window
-python repomap.py . --max-context-window 8192
+repomap . --max-context-window 8192
 
 # Exclude files with Page Rank 0
-python repomap.py . --exclude-unranked
+repomap . --exclude-unranked
 
 # Mention specific files or identifiers for higher priority
-python repomap.py . --mentioned-files config.py --mentioned-idents "main_function"
+repomap . --mentioned-files config.py --mentioned-idents "main_function"
 ```
 
 ----------

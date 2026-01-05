@@ -5,6 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "repomapper"
 version = "0.1.0"
+description = "Repository mapping tool and MCP server for codebase analysis."
+readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.13"
 dependencies = [
     "diskcache>=5.6.0",
@@ -17,7 +20,14 @@ dependencies = [
 ]
 
 [project.scripts]
-repomap-mcp = "repomap_server:main"
+repomap = "repomapper.cli:main"
+repomap-mcp = "repomapper.server:main"
 
 [tool.setuptools]
-py-modules = ["repomap_server", "repomap", "repomap_class", "utils", "importance", "scm"]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+repomapper = ["queries/**/*.scm"]

@@ -7,10 +7,8 @@ from typing import List, Optional, Dict, Any, Set
 import dataclasses
 
 from fastmcp import FastMCP, settings
-from repomap_class import RepoMap
-from utils import count_tokens, read_text
-from scm import get_scm_fname
-from importance import filter_important_files
+from .repomap import RepoMap
+from .utils import count_tokens, read_text
 
 # Helper function from your CLI, useful to have here
 def find_src_files(directory: str) -> List[str]:

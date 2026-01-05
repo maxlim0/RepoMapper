@@ -538,7 +538,7 @@ class RepoMap:
             return tree_output, tokens
         
         # Binary search for optimal number of tags
-        left, right = 0, len(ranked_tags)
+        left, right = 1, len(ranked_tags)
         best_tree = None
         
         while left <= right:
